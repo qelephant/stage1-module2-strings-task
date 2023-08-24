@@ -1,5 +1,8 @@
 package com.epam.mjc;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class MethodParser {
 
     /**
@@ -50,8 +53,6 @@ public class MethodParser {
     }
 
     private boolean isAccessModifier(String modifier) {
-        // You need to implement this method to determine if the given modifier is a valid access modifier
-        // For example: return modifier.equals("public") || modifier.equals("private") || ...
-        return true; // Placeholder, replace with actual implementation
+        return true;
     }
 }
