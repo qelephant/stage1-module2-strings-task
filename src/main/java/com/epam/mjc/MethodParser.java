@@ -22,9 +22,13 @@ public class MethodParser {
     public MethodSignature parseFunction(String signatureString) {
         String[] parts = signatureString.split("\\s+");
         
-        String accessModifier = parts[0];
-        String returnType = parts[1];
-        String methodName = parts[2];
+        int modifierIndex = 0;
+        if (isAccessModifier(parts[0])) {
+            modifierIndex++;
+        }
+        
+        String returnType = parts[modifierIndex];
+        String methodName = parts[modifierIndex + 1];
         
         int openingParenthesisIndex = signatureString.indexOf("(");
         int closingParenthesisIndex = signatureString.indexOf(")");
@@ -39,6 +43,8 @@ public class MethodParser {
             String argumentName = argumentParts[1];
             parsedArguments.add(new Argument(argumentType, argumentName));
         }
+        
+        String accessModifier = modifierIndex > 0 ? parts[0] : null;
         
         return new MethodSignature(accessModifier, returnType, methodName, parsedArguments);
     }
