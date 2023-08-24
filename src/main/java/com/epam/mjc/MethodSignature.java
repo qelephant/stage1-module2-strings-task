@@ -9,19 +9,21 @@ public class MethodSignature {
     private String methodName;
     private final List<Argument> arguments;
 
-    public MethodSignature(String accessModifier, String returnType, String methodName, List<Argument> arguments) {
-        this.accessModifier = accessModifier;
-        this.returnType = returnType;
+    public MethodSignature(String methodName, List<Argument> arguments) {
         this.methodName = methodName;
         this.arguments = arguments;
     }
 
-    public MethodSignature(String methodName, List<Argument> arguments) {
-        this(null, null, methodName, arguments);
+    public MethodSignature(String methodName) {
+        this(methodName, new ArrayList<>());
     }
 
-    public MethodSignature(String methodName) {
-        this(null, null, methodName, new ArrayList<>());
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 
     public String getAccessModifier() {
@@ -38,14 +40,6 @@ public class MethodSignature {
 
     public void setReturnType(String returnType) {
         this.returnType = returnType;
-    }
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
     }
 
     public List<Argument> getArguments() {
