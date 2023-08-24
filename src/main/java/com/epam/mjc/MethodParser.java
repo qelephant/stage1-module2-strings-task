@@ -53,6 +53,7 @@ public class MethodParser {
     }
 
     private boolean isAccessModifier(String modifier) {
-        return true;
+        
+        return true; 
     }
 }
