@@ -23,37 +23,40 @@ public class MethodParser {
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
     public MethodSignature parseFunction(String signatureString) {
-        String[] parts = signatureString.split("\\s+");
 
-        int modifierIndex = 0;
-        if (isAccessModifier(parts[0])) {
-            modifierIndex++;
+        String methodName = "", accessModifier = "", returnType = "";
+
+        List<MethodSignature.Argument> arguments = new ArrayList<>();
+        StringTokenizer stringTokenizer1 = new StringTokenizer(signatureString);
+        StringTokenizer stringTokenizer2 = new StringTokenizer("");
+
+        stringTokenizer2 = new StringTokenizer(stringTokenizer1.nextToken("(,)"));
+
+        for (int i = 0; stringTokenizer2.hasMoreTokens(); i++) {
+            String temp = stringTokenizer2.nextToken();
+            if (i == 0) {
+                if (temp.contains("public") || temp.contains("private")) {
+                    accessModifier = temp;
+                } else {
+                    accessModifier = null;
+                    returnType = temp;
+                    methodName = stringTokenizer2.nextToken();
+                }
+            }
+            if (i == 1) {
+                returnType = temp;
+                methodName = stringTokenizer2.nextToken();
+            }
         }
 
-        String returnType = parts[modifierIndex];
-        String methodName = parts[modifierIndex + 1];
-
-        int openingParenthesisIndex = signatureString.indexOf("(");
-        int closingParenthesisIndex = signatureString.indexOf(")");
-
-        String argumentList = signatureString.substring(openingParenthesisIndex + 1, closingParenthesisIndex);
-        String[] arguments = argumentList.split(",");
-
-        List<MethodSignature.Argument> parsedArguments = new ArrayList<>();
-        for (String argument : arguments) {
-            String[] argumentParts = argument.trim().split("\\s+");
-            String argumentType = argumentParts[0];
-            String argumentName = argumentParts[1];
-            parsedArguments.add(new MethodSignature.Argument(argumentType, argumentName));
+        while (stringTokenizer1.hasMoreTokens()) {
+            arguments.add(new MethodSignature.Argument(stringTokenizer1.nextToken("(,) "), stringTokenizer1.nextToken("(,) ")));
         }
 
-        String accessModifier = modifierIndex > 0 ? parts[0] : null;
+        MethodSignature signature = new MethodSignature(methodName, arguments);
+        signature.setAccessModifier(accessModifier);
+        signature.setReturnType(returnType);
 
-        return new MethodSignature(accessModifier, returnType, methodName, parsedArguments);
-    }
-
-    private boolean isAccessModifier(String modifier) {
-        
-        return true; 
+        return signature;
     }
 }
