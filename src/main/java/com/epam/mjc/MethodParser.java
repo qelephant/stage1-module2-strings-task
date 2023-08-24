@@ -20,6 +20,26 @@ public class MethodParser {
      * @return {@link MethodSignature} object filled with parsed values from source string
      */
     public MethodSignature parseFunction(String signatureString) {
-        throw new UnsupportedOperationException("You should implement this method.");
+        String[] parts = signatureString.split("\\s+");
+        
+        String accessModifier = parts[0];
+        String returnType = parts[1];
+        String methodName = parts[2];
+        
+        int openingParenthesisIndex = signatureString.indexOf("(");
+        int closingParenthesisIndex = signatureString.indexOf(")");
+        
+        String argumentList = signatureString.substring(openingParenthesisIndex + 1, closingParenthesisIndex);
+        String[] arguments = argumentList.split(",");
+        
+        List<Argument> parsedArguments = new ArrayList<>();
+        for (String argument : arguments) {
+            String[] argumentParts = argument.trim().split("\\s+");
+            String argumentType = argumentParts[0];
+            String argumentName = argumentParts[1];
+            parsedArguments.add(new Argument(argumentType, argumentName));
+        }
+        
+        return new MethodSignature(accessModifier, returnType, methodName, parsedArguments);
     }
 }
