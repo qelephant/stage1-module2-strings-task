@@ -21,31 +21,37 @@ public class MethodParser {
      */
     public MethodSignature parseFunction(String signatureString) {
         String[] parts = signatureString.split("\\s+");
-        
+
         int modifierIndex = 0;
         if (isAccessModifier(parts[0])) {
             modifierIndex++;
         }
-        
+
         String returnType = parts[modifierIndex];
         String methodName = parts[modifierIndex + 1];
-        
+
         int openingParenthesisIndex = signatureString.indexOf("(");
         int closingParenthesisIndex = signatureString.indexOf(")");
-        
+
         String argumentList = signatureString.substring(openingParenthesisIndex + 1, closingParenthesisIndex);
         String[] arguments = argumentList.split(",");
-        
-        List<Argument> parsedArguments = new ArrayList<>();
+
+        List<MethodSignature.Argument> parsedArguments = new ArrayList<>();
         for (String argument : arguments) {
             String[] argumentParts = argument.trim().split("\\s+");
             String argumentType = argumentParts[0];
             String argumentName = argumentParts[1];
-            parsedArguments.add(new Argument(argumentType, argumentName));
+            parsedArguments.add(new MethodSignature.Argument(argumentType, argumentName));
         }
-        
+
         String accessModifier = modifierIndex > 0 ? parts[0] : null;
-        
+
         return new MethodSignature(accessModifier, returnType, methodName, parsedArguments);
+    }
+
+    private boolean isAccessModifier(String modifier) {
+        // You need to implement this method to determine if the given modifier is a valid access modifier
+        // For example: return modifier.equals("public") || modifier.equals("private") || ...
+        return true; // Placeholder, replace with actual implementation
     }
 }
