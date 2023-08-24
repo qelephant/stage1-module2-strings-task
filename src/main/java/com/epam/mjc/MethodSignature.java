@@ -24,15 +24,6 @@ public class MethodSignature {
         this(null, null, methodName, new ArrayList<>());
     }
 
-
-    public String getMethodName() {
-        return methodName;
-    }
-
-    public void setMethodName(String methodName) {
-        this.methodName = methodName;
-    }
-
     public String getAccessModifier() {
         return accessModifier;
     }
@@ -47,6 +38,14 @@ public class MethodSignature {
 
     public void setReturnType(String returnType) {
         this.returnType = returnType;
+    }
+
+    public String getMethodName() {
+        return methodName;
+    }
+
+    public void setMethodName(String methodName) {
+        this.methodName = methodName;
     }
 
     public List<Argument> getArguments() {
