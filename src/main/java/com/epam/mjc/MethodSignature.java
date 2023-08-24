@@ -24,9 +24,6 @@ public class MethodSignature {
         this(null, null, methodName, new ArrayList<>());
     }
 
-    public MethodSignature(String methodName) {
-        this(methodName, new ArrayList<>());
-    }
 
     public String getMethodName() {
         return methodName;
